@@ -8,8 +8,9 @@ used dependencies : nodemon => for not needing to restart the server every save
                     express => take a wild fucking guess
                     multer => A middlewere between backend and frontend to process file uploads
                     jsonwebtoken
-                    bcryptjs : these two are for making a logged in user sessions n shit
+                    bcryptjs : store passwords safely in database like mongoDB
                     stream : fragment the video file chunk by chunk to send it
+                    JWT : is pretty much for logging in. The user carries their own login token
                     
  }
 
