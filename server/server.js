@@ -1,6 +1,7 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 const path = require('path');
 const cors = require('cors');
 const multer = require('multer');
@@ -17,7 +18,8 @@ const jwt = require("jsonwebtoken");
 
 
 
-const JWT_SECRET = "super_secret_key";
+const JWT_SECRET = process.env.JWT_SECRET;
+
 
 app.use(cors());
 
@@ -56,10 +58,10 @@ app.use((req, res, next) => {
 
 //googledrive authetication or sum bs
 const { google } = require('googleapis');
-const CLIENT_ID = '595634120248-gtt3nhg5unkfv4bglnivde0i5us1b261.apps.googleusercontent.com';
-const CLIENT_SECRET = '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';
-const REDIRECT_URI = 'https://developers.google.com/oauthplayground';
-const REFRESH_TOKEN = '1//04eOYesuGv7sKCgYIARAAGAQSNwF-L9IrQOPWVXFjvySpINr8YwTbdysFn266gd1mgXA5TqC4QiA7EKiHd2JWWRzjsLMt1r6EP1Q';
+const CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+const CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
+const REDIRECT_URI = process.env.GOOGLE_REDIRECT_URI;
+const REFRESH_TOKEN = process.env.GOOGLE_REFRESH_TOKEN;
 
 //set the variables up (idfk)
 const oauth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
@@ -70,7 +72,7 @@ const drive = google.drive({ version: 'v3', auth: oauth2Client });
 
 //mongodb authetication or sum bs
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri_Mongo = "mongodb+srv://Tartaglia:Tartaglia89893088@cluster0.s3fwig5.mongodb.net/";
+const uri_Mongo = process.env.MONGO_URI;
 
 const client = new MongoClient(uri_Mongo, {
   serverApi: {
