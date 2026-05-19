@@ -9,7 +9,7 @@ function Library() {
     const [categories, setCategories] = useState([])
     const [poster, setPoster] = useState(null)
     const [movieFile, setMovieFile] = useState(null);
-
+    const API = process.env.REACT_APP_API
 
     const token = localStorage.getItem("token");
 
@@ -47,8 +47,6 @@ const handleSubmit = async (e) => {
         });
 
     try {
-        // convert poster → base64
-        const posterBase64 = await toBase64(poster);
 
         // build form data (IMPORTANT for file upload)
         const formData = new FormData();
@@ -61,8 +59,8 @@ const handleSubmit = async (e) => {
         formData.append("poster", poster);      // raw file (NOT base64)
         formData.append("movie", movieFile);    // raw video file
 
-        const res = await fetch("http://localhost:5000/upload", {
-            method: "POST",
+        const res = await fetch(`${API}/upload`, {
+             method: "POST",
             body: formData,
         });
 

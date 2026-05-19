@@ -6,8 +6,8 @@ import backdrop from '../assets/img/backdrop.webp'
 function Description() {
     const { id } = useParams()
     const [movie, setMovie] = useState(null)
-
-
+    
+    const API = process.env.REACT_APP_API;
     const token = localStorage.getItem("token");
 
 
@@ -19,18 +19,18 @@ function Description() {
 
 
     useEffect(() => {
-        fetch(`http://localhost:5000/movies/${id}`)
+        fetch(`${API}/movies/${id}`)
             .then(res => res.json())
             .then(setMovie);
 
-        fetch(`http://localhost:5000/comments/${id}`)
+        fetch(`${API}/comments/${id}`)
             .then(res => res.json())
             .then(setComments);
 
         if (!token) {
             window.location.href = "/";
         }
-    }, [id]);
+    }, [id, API, token]);
 
 
 
@@ -39,7 +39,7 @@ function Description() {
 
     const user = JSON.parse(localStorage.getItem("user"));
 
-    const res = await fetch("http://localhost:5000/comments", {
+    const res = await fetch(`${API}/comments`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

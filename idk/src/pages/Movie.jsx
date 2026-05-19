@@ -6,7 +6,7 @@ import styleMovie from '../assets/css/Movie.module.css'
 
 function Movie() {
 const token = localStorage.getItem("token");
-
+const API = process.env.REACT_APP_API;
 
 
 useEffect(() => {
@@ -25,7 +25,7 @@ const { id } = useParams();
     </div>
     <div className={styleMovie.Video}>
       <video controls autoPlay className={styleMovie.VideoPlayer} >
-        <source src={`http://localhost:5000/files/${id}`} type="video/mp4" />
+          <source src={`${API}/files/${id}`} type="video/mp4" />
       </video>
     </div>
   </div>

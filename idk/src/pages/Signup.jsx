@@ -6,12 +6,12 @@ function Signup() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
-
+    const API = process.env.REACT_APP_API;
 
 
     const handleSignup = async () => {
     try {
-      const res = await fetch("http://localhost:5000/signup", {
+      const res = await fetch(`${API}/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),

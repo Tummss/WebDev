@@ -8,10 +8,10 @@ import backdrop from '../assets/img/backdrop.webp'
         const [files, setFiles] = useState([])
         const user = JSON.parse(localStorage.getItem("user"));     //define the user token
         const token = localStorage.getItem("token");
-
+        const API = process.env.REACT_APP_API;
 
     useEffect(() => {
-        fetch('http://localhost:5000/movies')
+        fetch(`${API}/movies`)
         .then(res => res.json())
         .then(data => setFiles(data))
         .catch(err => console.error(err))
