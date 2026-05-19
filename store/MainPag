@@ -1,0 +1,856 @@
+import React from 'react'
+import styles from '../assets/css/Main.module.css'
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { topFunction,initScrollButtons, initMenuToggle } from "../assets/js/Main";
+
+
+
+
+import backdrop from '../assets/img/backdrop.webp'
+import demonSlayer from '../assets/img/DemonSlayer_Poster.webp'
+import joker from '../assets/img/TheJoker_Poster.webp'
+import wallE from '../assets/img/WALL-E_Poster.jpg'
+import pacificRim from '../assets/img/PacificRim_Poster.webp'
+import spiderman from '../assets/img/SpiderManIntoTheSpiderVerse_Poster.webp'
+import mandalorian from '../assets/img/StarWarsTheMandalorianAndGrogu_Poster.jpg'
+import episode7 from '../assets/img/StarWarsEpisode_vii_Poster.jpg'
+import oppenheimer from '../assets/img/Oppenheimer_Poster.webp'
+import rio from '../assets/img/Rio_Poster.webp'
+import whiplash from '../assets/img/whiplash_Poster.webp'
+import blackSwan from '../assets/img/BlackSwan_Poster.jpg'
+import ChainsawMan from '../assets/img/ChainsawMan.webp'
+
+
+
+
+function Main_Page() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [files, setFiles] = useState([]);
+
+  useEffect(() => {
+    initScrollButtons();
+    initMenuToggle();
+
+    fetch('http://localhost:5000/files')
+      .then(res => res.json())
+      .then(data => setFiles(data))
+      .catch(err => console.error(err));
+  }, []);
+
+  const getRandomMovies = (arr, count) => {
+  return [...arr]
+    .sort(() => 0.5 - Math.random())
+    .slice(0, count);
+};
+
+
+const randomMovies = getRandomMovies(files, 10);
+
+
+return (
+<>
+<div className={styles.Biggest}>
+    <div className={`${styles.Header} ${menuOpen ? styles.open : ""}`} data-header> 
+        <button onClick={topFunction} id="myBtn" title="Go to top"><i data-home className={ `${styles.Menu} fi fi-rr-home` }></i></button>
+        <i id="Notif" className={ `${styles.Notif} fi fi-rs-bell` }></i>
+        <Link to ="/liked"><i id="Library" className={ `${styles.Library} fi fi-rr-apps` }></i></Link>
+        <i id="Search" className={ `${styles.Search} fi fi-br-search` }></i>
+        <Link to ="/library"><i id="Folder" className={ `${styles.Folder} fi fi-rr-folder` }></i></Link>
+        <Link to ="/"><i id="Account" className={ `${styles.Account} fi fi-ss-user` }></i></Link>
+
+    </div>
+
+    
+    <div className={`${styles.Body} ${menuOpen ? styles.shifted : ""}`} data-body>
+        <div className={styles.Section}>
+            <p>Movie streaming website</p>
+            <div className={styles.image_stuff}>
+                <div className={styles.gradiant}></div>
+                <img src={backdrop} alt=""/>
+            </div>
+            <i className={`${styles.Menu} fi fi-rr-menu-burger`} onClick={() => {setMenuOpen(prev => !prev);}}></i>
+        </div>
+
+
+
+
+
+
+
+        <div className={styles.Section1} data-section>
+            <p>Action</p>
+            <div className={styles.Movies}>
+                {randomMovies.map(movie => (
+                    <div key={movie.id} className={styles.movieCard}>
+                        <Link to={`/movie/${movie.id}`}>
+                            <div className={styles.details}>
+                                <h1>{movie.name}</h1>
+                                <div className={styles.stars}>
+                                    <p>4.5</p>
+                                    <i className={`${styles.icon} fi fi-ss-star`}></i>
+                                </div>
+                            </div>
+                            {/* If image */}{movie.mimeType.startsWith("image") && (<img src={movie.url} alt={movie.name} />)}
+                            {/* If video (optional thumbnail fallback) */}
+                            {movie.mimeType.startsWith("video") && (<img src="/default-thumbnail.jpg" alt="video" />)}
+                        </Link>
+                    </div>))}
+            </div>
+            <button data-slide-left className={styles.slideLeft}><i className={ `${styles.icon} fi fi-rr-angle-left` }></i></button>
+            <button data-slide-right className={styles.slideRight}><i className={ `${styles.icon} fi fi-rr-angle-right` }></i></button>
+        </div>
+
+
+
+
+
+
+
+        <div className={styles.Section2} data-section>
+            <p>Action</p>
+            <div className={styles.Movies} data-movies>
+
+                <div className={styles.movieCard}>
+                    <Link to="/movie">
+                        <div className={styles.details}>
+                            <h1>Movie Name </h1>
+                            <div className={styles.stars}>
+                                <p>4.5</p>
+                                <i className={ `${styles.icon} fi fi-ss-star` }></i>
+                            </div>
+                        </div>
+                        <img src={demonSlayer} alt="" />
+                     </Link>                   
+                </div>
+
+
+                <div className={styles.movieCard}>
+                    <Link to="/movie">
+                        <div className={styles.details}>
+                            <h1>Movie Name </h1>
+                            <div className={styles.stars}>
+                                <p>4.5</p>
+                                <i className={ `${styles.icon} fi fi-ss-star` }></i>
+                            </div>
+                        </div>
+                        <img src={joker} alt="" />
+                     </Link>                   
+                </div>
+                <div className={styles.movieCard}>
+                    <Link to="/movie">
+                        <div className={styles.details}>
+                            <h1>Movie Name </h1>
+                            <div className={styles.stars}>
+                                <p>4.5</p>
+                                <i className={ `${styles.icon} fi fi-ss-star` }></i>
+                            </div>
+                        </div>
+                        <img src={wallE} alt="" />
+                     </Link>                   
+                </div>
+                <div className={styles.movieCard}>
+                    <Link to="/movie">
+                        <div className={styles.details}>
+                            <h1>Movie Name </h1>
+                            <div className={styles.stars}>
+                                <p>4.5</p>
+                                <i className={ `${styles.icon} fi fi-ss-star` }></i>
+                            </div>
+                        </div>
+                        <img src={pacificRim} alt="" />
+                     </Link>                   
+                </div>
+                <div className={styles.movieCard}>
+                    <Link to="/movie">
+                        <div className={styles.details}>
+                            <h1>Movie Name </h1>
+                            <div className={styles.stars}>
+                                <p>4.5</p>
+                                <i className={ `${styles.icon} fi fi-ss-star` }></i>
+                            </div>
+                        </div>
+                        <img src={spiderman} alt="" />
+                     </Link>                   
+                </div>
+                <div className={styles.movieCard}>
+                    <Link to="/movie">
+                        <div className={styles.details}>
+                            <h1>Movie Name </h1>
+                                <div className={styles.stars}>
+                                <p>4.5</p>
+                                <i className={ `${styles.icon} fi fi-ss-star` }></i>
+                            </div>
+                        </div>
+                        <img src={mandalorian} alt="" />
+                     </Link>                   
+                </div>
+                <div className={styles.movieCard}>
+                    <Link to="/movie">
+                        <div className={styles.details}>
+                            <h1>Movie Name </h1>
+                            <div className={styles.stars}>
+                                <p>4.5</p>
+                                <i className={ `${styles.icon} fi fi-ss-star` }></i>
+                            </div>
+                        </div>
+                        <img src={episode7} alt="" />
+                    </Link>                   
+                </div>
+                <div className={styles.movieCard}>
+                    <Link to="/movie">
+                        <div className={styles.details}>
+                            <h1>Movie Name </h1>
+                            <div className={styles.stars}>
+                                <p>4.5</p>
+                                <i className={ `${styles.icon} fi fi-ss-star` }></i>
+                            </div>
+                        </div>
+                        <img src={oppenheimer} alt="" />
+                    </Link>                   
+                </div>
+                <div className={styles.movieCard}>
+                    <Link to="/movie">
+                        <div className={styles.details}>
+                            <h1>Movie Name </h1>
+                            <div className={styles.stars}>
+                                <p>4.5</p>
+                                <i className={ `${styles.icon} fi fi-ss-star` }></i>
+                            </div>
+                        </div>
+                        <img src={rio} alt="" />
+                    </Link>                   
+                </div>
+                <div className={styles.movieCard}>
+                    <Link to="/movie">
+                        <div className={styles.details}>
+                            <h1>Movie Name </h1>
+                            <div className={styles.stars}>
+                                <p>4.5</p>
+                                <i className={ `${styles.icon} fi fi-ss-star` }></i>
+                            </div>
+                        </div>
+                        <img src={whiplash} alt="" />
+                    </Link>                   
+                </div>
+                <div className={styles.movieCard}>
+                    <Link to="/movie">
+                        <div className={styles.details}>
+                            <h1>Movie Name </h1>
+                            <div className={styles.stars}>
+                                <p>4.5</p>
+                                <i className={ `${styles.icon} fi fi-ss-star` }></i>
+                            </div>
+                        </div>
+                        <img src={blackSwan} alt="" />
+                    </Link>                  
+                </div>
+            </div>
+            <button data-slide-left className={styles.slideLeft}><i className={ `${styles.icon} fi fi-rr-angle-left` }></i></button>
+            <button data-slide-right className={styles.slideRight}><i className={ `${styles.icon} fi fi-rr-angle-right` }></i></button>
+        </div>
+
+
+
+
+
+
+        <div className={styles.Section3} data-section>
+            <p>Action</p>
+            <div className={styles.Movies} data-movies>
+                <div className={styles.movieCard}>
+                    <Link to="/movie">
+                        <div className={styles.details}>
+                            <h1>Movie Name </h1>
+                            <div className={styles.stars}>
+                                <p>4.5</p>
+                                <i className={ `${styles.icon} fi fi-ss-star` }></i>
+                            </div>
+                        </div>
+                        <img src={demonSlayer} alt="" />
+                    </Link>                   
+                </div>
+
+
+                <div className={styles.movieCard}>
+                    <Link to="/movie">
+                        <div className={styles.details}>
+                            <h1>Movie Name </h1>
+                            <div className={styles.stars}>
+                                <p>4.5</p>
+                                <i className={ `${styles.icon} fi fi-ss-star` }></i>
+                            </div>
+                        </div>
+                        <img src={joker} alt="" />
+                    </Link>                   
+                </div>
+                <div className={styles.movieCard}>
+                    <Link to="/movie">
+                        <div className={styles.details}>
+                            <h1>Movie Name </h1>
+                            <div className={styles.stars}>
+                                <p>4.5</p>
+                                <i className={ `${styles.icon} fi fi-ss-star` }></i>
+                            </div>
+                        </div>
+                        <img src={wallE} alt="" />
+                    </Link>                  
+                </div>
+                <div className={styles.movieCard}>
+                    <Link to="/movie">
+                        <div className={styles.details}>
+                            <h1>Movie Name </h1>
+                            <div className={styles.stars}>
+                                <p>4.5</p>
+                                <i className={ `${styles.icon} fi fi-ss-star` }></i>
+                            </div>
+                        </div>
+                        <img src={pacificRim} alt="" />
+                    </Link>                  
+                </div>
+                <div className={styles.movieCard}>
+                    <Link to="/movie">
+                        <div className={styles.details}>
+                            <h1>Movie Name </h1>
+                            <div className={styles.stars}>
+                                <p>4.5</p>
+                                <i className={ `${styles.icon} fi fi-ss-star` }></i>
+                            </div>
+                        </div>
+                        <img src={spiderman} alt="" />
+                    </Link>                   
+                </div>
+                <div className={styles.movieCard}>
+                    <Link to="/movie">
+                        <div className={styles.details}>
+                            <h1>Movie Name </h1>
+                                <div className={styles.stars}>
+                                <p>4.5</p>
+                                <i className={ `${styles.icon} fi fi-ss-star` }></i>
+                            </div>
+                        </div>
+                        <img src={mandalorian} alt="" />
+                    </Link>                   
+                </div>
+                <div className={styles.movieCard}>
+                    <Link to="/movie">
+                        <div className={styles.details}>
+                            <h1>Movie Name </h1>
+                            <div className={styles.stars}>
+                                <p>4.5</p>
+                                <i className={ `${styles.icon} fi fi-ss-star` }></i>
+                            </div>
+                        </div>
+                        <img src={episode7} alt="" />
+                    </Link>                   
+                </div>
+                <div className={styles.movieCard}>
+                    <Link to="/movie">
+                        <div className={styles.details}>
+                            <h1>Movie Name </h1>
+                            <div className={styles.stars}>
+                                <p>4.5</p>
+                                <i className={ `${styles.icon} fi fi-ss-star` }></i>
+                            </div>
+                        </div>
+                        <img src={oppenheimer} alt="" />
+                    </Link>                   
+                </div>
+                <div className={styles.movieCard}>
+                    <Link to="/movie">
+                        <div className={styles.details}>
+                            <h1>Movie Name </h1>
+                            <div className={styles.stars}>
+                                <p>4.5</p>
+                                <i className={ `${styles.icon} fi fi-ss-star` }></i>
+                            </div>
+                        </div>
+                        <img src={rio} alt="" />
+                    </Link>                   
+                </div>
+                <div className={styles.movieCard}>
+                    <Link to="/movie">
+                        <div className={styles.details}>
+                            <h1>Movie Name </h1>
+                            <div className={styles.stars}>
+                                <p>4.5</p>
+                                <i className={ `${styles.icon} fi fi-ss-star` }></i>
+                            </div>
+                        </div>
+                        <img src={whiplash} alt="" />
+                    </Link>                   
+                </div>
+                <div className={styles.movieCard}>
+                    <Link to="/movie">
+                        <div className={styles.details}>
+                            <h1>Movie Name </h1>
+                            <div className={styles.stars}>
+                                <p>4.5</p>
+                                <i className={ `${styles.icon} fi fi-ss-star` }></i>
+                            </div>
+                        </div>
+                        <img src={blackSwan} alt="" />
+                    </Link>                   
+                </div>
+            </div>
+            <button data-slide-left className={styles.slideLeft}><i className={ `${styles.icon} fi fi-rr-angle-left` }></i></button>
+            <button data-slide-right className={styles.slideRight}><i className={ `${styles.icon} fi fi-rr-angle-right` }></i></button>
+        </div>
+
+
+
+
+
+
+
+
+        <div className={styles.Section4} data-section>
+            <p>Action</p>
+            <div className={styles.Movies} data-movies>
+                <div className={styles.movieCard}>
+                    <Link to="/movie">
+                        <div className={styles.details}>
+                            <h1>Movie Name </h1>
+                            <div className={styles.stars}>
+                                <p>4.5</p>
+                                <i className={ `${styles.icon} fi fi-ss-star` }></i>
+                            </div>
+                        </div>
+                        <img src={demonSlayer} alt="" />
+                    </Link>                   
+                </div>
+
+
+                <div className={styles.movieCard}>
+                    <Link to="/movie">
+                        <div className={styles.details}>
+                            <h1>Movie Name </h1>
+                            <div className={styles.stars}>
+                                <p>4.5</p>
+                                <i className={ `${styles.icon} fi fi-ss-star` }></i>
+                            </div>
+                        </div>
+                        <img src={joker} alt="" />
+                    </Link>                   
+                </div>
+                <div className={styles.movieCard}>
+                    <Link to="/movie">
+                        <div className={styles.details}>
+                            <h1>Movie Name </h1>
+                            <div className={styles.stars}>
+                                <p>4.5</p>
+                                <i className={ `${styles.icon} fi fi-ss-star` }></i>
+                            </div>
+                        </div>
+                        <img src={wallE} alt="" />
+                    </Link>                   
+                </div>
+                <div className={styles.movieCard}>
+                    <Link to="/movie">
+                        <div className={styles.details}>
+                            <h1>Movie Name </h1>
+                            <div className={styles.stars}>
+                                <p>4.5</p>
+                                <i className={ `${styles.icon} fi fi-ss-star` }></i>
+                            </div>
+                        </div>
+                        <img src={pacificRim} alt="" />
+                    </Link>                   
+                </div>
+                <div className={styles.movieCard}>
+                    <Link to="/movie">
+                        <div className={styles.details}>
+                            <h1>Movie Name </h1>
+                            <div className={styles.stars}>
+                                <p>4.5</p>
+                                <i className={ `${styles.icon} fi fi-ss-star` }></i>
+                            </div>
+                        </div>
+                        <img src={spiderman} alt="" />
+                    </Link>                   
+                </div>
+                <div className={styles.movieCard}>
+                    <Link to="/movie">
+                        <div className={styles.details}>
+                            <h1>Movie Name </h1>
+                                <div className={styles.stars}>
+                                <p>4.5</p>
+                                <i className={ `${styles.icon} fi fi-ss-star` }></i>
+                            </div>
+                        </div>
+                        <img src={mandalorian} alt="" />
+                    </Link>                   
+                </div>
+                <div className={styles.movieCard}>
+                    <Link to="/movie">
+                        <div className={styles.details}>
+                            <h1>Movie Name </h1>
+                            <div className={styles.stars}>
+                                <p>4.5</p>
+                                <i className={ `${styles.icon} fi fi-ss-star` }></i>
+                            </div>
+                        </div>
+                        <img src={episode7} alt="" />
+                    </Link>                   
+                </div>
+                <div className={styles.movieCard}>
+                    <Link to="/movie">
+                        <div className={styles.details}>
+                            <h1>Movie Name </h1>
+                            <div className={styles.stars}>
+                                <p>4.5</p>
+                                <i className={ `${styles.icon} fi fi-ss-star` }></i>
+                            </div>
+                        </div>
+                        <img src={oppenheimer} alt="" />
+                    </Link>                   
+                </div>
+                <div className={styles.movieCard}>
+                    <Link to="/movie">
+                        <div className={styles.details}>
+                            <h1>Movie Name </h1>
+                            <div className={styles.stars}>
+                                <p>4.5</p>
+                                <i className={ `${styles.icon} fi fi-ss-star` }></i>
+                            </div>
+                        </div>
+                        <img src={rio} alt="" />
+                    </Link>                   
+                </div>
+                <div className={styles.movieCard}>
+                    <Link to="/movie">
+                        <div className={styles.details}>
+                            <h1>Movie Name </h1>
+                            <div className={styles.stars}>
+                                <p>4.5</p>
+                                <i className={ `${styles.icon} fi fi-ss-star` }></i>
+                            </div>
+                        </div>
+                        <img src={whiplash} alt="" />
+                    </Link>                   
+                </div>
+                <div className={styles.movieCard}>
+                    <Link to="/movie">
+                        <div className={styles.details}>
+                            <h1>Movie Name </h1>
+                            <div className={styles.stars}>
+                                <p>4.5</p>
+                                <i className={ `${styles.icon} fi fi-ss-star` }></i>
+                            </div>
+                        </div>
+                        <img src={blackSwan} alt="" />
+                    </Link>                   
+                </div>
+            </div>
+            <button data-slide-left className={styles.slideLeft}><i className={ `${styles.icon} fi fi-rr-angle-left` }></i></button>
+            <button data-slide-right className={styles.slideRight}><i className={ `${styles.icon} fi fi-rr-angle-right` }></i></button>
+        </div>
+
+
+        <div className={styles.Footer}>
+        
+        </div>
+    </div>
+</div>
+    
+
+
+
+    
+</>
+  )
+}
+
+export default Main_Page
+
+
+
+
+
+
+
+
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: #0b0b0b;
+    font-family: sans-serif;
+    overflow-x: hidden;
+}
+
+.container{
+    display: flex;
+    min-height: 100vh;
+    background-color: #0b0b0b;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    width: 230px;
+    height: 100vh;
+
+    background-color: #111111;
+
+    position: fixed;
+    left: 0;
+    top: 0;
+
+    padding: 30px 20px;
+
+    border-right: 1px solid rgba(255,255,255,0.05);
+}
+
+.sidebar h2{
+    color: white;
+    margin-bottom: 40px;
+    font-size: 28px;
+}
+
+.sidebar nav{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.sidebar nav a{
+    color: #bcbcbc;
+    text-decoration: none;
+
+    padding: 14px;
+
+    border-radius: 10px;
+
+    transition: 0.25s ease;
+}
+
+.sidebar nav a:hover{
+    background-color: #1e1e1e;
+    color: white;
+}
+
+/* MAIN CONTENT */
+
+.mainContent{
+    width: calc(100% - 230px);
+    margin-left: 230px;
+}
+
+/* HERO */
+
+.hero{
+    width: 100%;
+    height: 650px;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+.hero img{
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+.overlay{
+    position: absolute;
+    inset: 0;
+
+    background: linear-gradient(
+        to right,
+        rgba(0,0,0,0.95),
+        rgba(0,0,0,0.4),
+        transparent
+    );
+}
+
+.heroContent{
+    position: absolute;
+
+    top: 50%;
+    left: 70px;
+
+    transform: translateY(-50%);
+
+    z-index: 10;
+}
+
+.heroContent h1{
+    color: white;
+    font-size: 65px;
+
+    width: 600px;
+
+    margin-bottom: 20px;
+}
+
+.heroContent p{
+    color: #d3d3d3;
+
+    font-size: 18px;
+
+    margin-bottom: 30px;
+}
+
+.heroButtons{
+    display: flex;
+    gap: 15px;
+}
+
+.heroButtons button{
+    padding: 14px 28px;
+
+    border: none;
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-size: 15px;
+    font-weight: bold;
+
+    transition: 0.25s ease;
+}
+
+.heroButtons button:first-child{
+    background-color: white;
+    color: black;
+}
+
+.heroButtons button:last-child{
+    background-color: rgba(255,255,255,0.1);
+    color: white;
+}
+
+.heroButtons button:hover{
+    transform: scale(1.05);
+}
+
+/* MOVIE SECTION */
+
+.movieSection{
+    margin-top: 50px;
+    padding: 0 40px;
+}
+
+.sectionHeader{
+    margin-bottom: 20px;
+}
+
+.sectionHeader h2{
+    color: white;
+    font-size: 28px;
+}
+
+.movieRow{
+    display: flex;
+    gap: 20px;
+
+    overflow-x: auto;
+
+    padding-bottom: 20px;
+
+    scrollbar-width: none;
+}
+
+.movieRow::-webkit-scrollbar{
+    display: none;
+}
+
+/* CARD */
+
+.card{
+    min-width: 220px;
+    height: 320px;
+
+    position: relative;
+
+    border-radius: 18px;
+
+    overflow: hidden;
+
+    text-decoration: none;
+
+    transition: 0.3s ease;
+}
+
+.card:hover{
+    transform: scale(1.06);
+}
+
+.card img{
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+.cardOverlay{
+    position: absolute;
+    inset: 0;
+
+    background: linear-gradient(
+        to top,
+        rgba(0,0,0,0.95),
+        transparent
+    );
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    padding: 18px;
+}
+
+.cardOverlay h3{
+    color: white;
+    font-size: 16px;
+
+    margin-bottom: 8px;
+}
+
+.cardOverlay p{
+    color: gold;
+    font-size: 14px;
+}
+
+/* MOBILE */
+
+@media(max-width: 900px){
+
+    .sidebar{
+        display: none;
+    }
+
+    .mainContent{
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .hero{
+        height: 500px;
+    }
+
+    .heroContent{
+        left: 30px;
+    }
+
+    .heroContent h1{
+        font-size: 42px;
+        width: 300px;
+    }
+
+    .card{
+        min-width: 170px;
+        height: 250px;
+    }
+}
+
+

@@ -1,0 +1,192 @@
+.Body{
+    background:#0b0b0f;
+    color:white;
+    font-family:sans-serif;
+    padding-bottom:40px;
+    height:900px;
+}
+
+
+.header{
+    height:80px;
+    display:flex;
+    align-items:center;
+    padding:0 30px;
+    background:#111114;
+    border-bottom:1px solid rgba(255,255,255,0.08);
+    position:relative;
+}
+
+.back{
+    font-size:28px;
+    color:white;
+    transition:0.2s;
+}
+
+.back:hover{
+    opacity:0.7;
+}
+
+.header h2{
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:24px;
+    font-weight:700;
+}
+
+
+
+.Main{
+    width:85%;
+    width:900px;
+    background:#151518;
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:10px;
+    padding:35px;
+    box-shadow:0 0 40px rgba(0,0,0,0.5);
+    margin: auto;
+}
+
+
+
+.topText{
+    margin-bottom:30px;
+}
+
+.topText h1{
+    font-size:34px;
+    margin-bottom:8px;
+}
+
+.topText p{
+    color:#9d9d9d;
+    font-size:15px;
+}
+
+
+.form{
+    display:flex;
+    flex-direction:column;
+    gap:22px;
+}
+
+
+.inputGroup{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.inputGroup label{
+    font-size:15px;
+    color:#d8d8d8;
+    font-weight:600;
+}
+
+.inputGroup input,
+.inputGroup textarea,
+.select{
+    background:#202024;
+    border:1px solid rgba(255,255,255,0.08);
+    color:white;
+    padding:14px;
+    border-radius:10px;
+    font-size:15px;
+    outline:none;
+    transition:0.2s;
+}
+
+.inputGroup textarea{
+    min-height:130px;
+    resize:none;
+}
+
+.row{
+    display:flex;
+    gap:20px;
+}
+
+.row .inputGroup{
+    flex:1;
+}
+
+.select{
+    cursor:pointer;
+}
+
+.categoryBox{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:5px;
+}
+
+.categoryTag{
+    background:#942c2c;
+    padding:8px 14px;
+    border-radius:50px;
+    font-size:13px;
+    font-weight:600;
+}
+
+.uploadSection{
+    display:grid;
+    gap:20px;
+}
+
+.uploadBox{
+    background:#1b1b20;
+    border-radius:16px;
+    padding:25px;
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+.uploadBox label{
+    font-size:15px;
+    font-weight:600;
+    color:#d6d6d6;
+}
+
+.uploadBox input{
+    background:#25252a;
+    border:none;
+    color:white;
+    padding:12px;
+    border-radius:10px;
+}
+
+.addBtn{
+    margin-top:10px;
+    height:55px;
+    border:none;
+    border-radius:10px;
+    background:#e50914;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    transition:0.2s;
+}
+
+.addBtn:hover{
+    transform:scale(1.02);
+}
+
+
+
+@media(max-width:768px){
+
+    .Main{
+        width:92%;
+        padding:25px;
+    }
+    .row{
+        flex-direction:column;
+    }
+    .uploadSection{
+        grid-template-columns:1fr;
+    }
+
+}

@@ -1,0 +1,92 @@
+
+.Body{
+    background-color: #0f0f0f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 742px;
+}
+.Main{
+    position: relative;
+    background-color: #393E46;
+    width: 500px;
+    height: 600px;
+}
+.Main p{
+    position: absolute;
+    top: 15%;
+    left: 20%;
+    font-size: 30px;
+    color: #F5EAF5;
+}
+.Input{
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.Input .UserName{
+    margin-bottom: 10px;
+}
+.Input .Pass{
+    margin-top: 10px;
+}
+.Input input{
+    width: 320px;
+    height: 40px;
+    border-radius: 4px;
+    margin: 2px;
+    padding: 5px;
+}
+.Buttons{
+    display: flex;
+    position: absolute;
+    top: 52%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+button{
+    width: 330px;
+    height: 45px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.Body .Link{
+    position: absolute;
+    top: 60%;
+    left: 40%;
+    color: #4187d6;
+    font-size: 14px;
+}
+
+.Body .Link a{
+    color: #34b1d7;
+    text-decoration: none;
+}
+
+@media screen and (max-width: 900px) {
+.Main{
+    position: relative;
+    background-color: #393E46;
+    width: 70%;
+    height: 500px;
+}
+.Input{
+    width: 60%;
+}
+.Input input{
+    width: 100%;
+    height: 30px;
+    border-radius: 4px;
+    padding: 5px;
+}
+.Buttons{
+    width: 30%;
+    height: 45px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 20%;
+    margin-top: 10px;
+}
+}

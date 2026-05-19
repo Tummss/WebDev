@@ -1,0 +1,226 @@
+
+const express = require('express');
+const app = express();
+const cors = require('cors');
+app.use(cors());
+const PORT = 5000;
+
+
+
+
+
+//googledrive authetication or sum bs
+const { google } = require('googleapis');
+const CLIENT_ID = '595634120248-gtt3nhg5unkfv4bglnivde0i5us1b261.apps.googleusercontent.com';
+const CLIENT_SECRET = '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';
+const REDIRECT_URI = 'https://developers.google.com/oauthplayground';
+const REFRESH_TOKEN = '1//04eOYesuGv7sKCgYIARAAGAQSNwF-L9IrQOPWVXFjvySpINr8YwTbdysFn266gd1mgXA5TqC4QiA7EKiHd2JWWRzjsLMt1r6EP1Q';
+
+//set the variables up (idfk)
+const oauth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
+oauth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
+const drive = google.drive({ version: 'v3', auth: oauth2Client });
+
+
+
+
+
+
+
+
+
+
+//mongodb authetication or sum bs
+const { MongoClient, ServerApiVersion } = require('mongodb');
+const uri_Mongo = "mongodb+srv://Tartaglia:Tartaglia89893088@cluster0.s3fwig5.mongodb.net/";
+
+const client = new MongoClient(uri_Mongo, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
+});
+let db;
+
+
+
+async function connectMongoDB() {
+  try {
+    await client.connect();
+    db = client.db("Movies");
+    console.log("MongoDB connected");
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+
+
+
+
+//idfk
+const corsOptions = {
+  origin: 'http://localhost:3000', 
+}
+
+
+
+
+
+
+
+// ---------------- List files dynamically ---------------- //
+async function getFiles() {
+  const res = await drive.files.list({
+    pageSize: 100,
+    fields: 'files(id, name, mimeType)',
+    q: "'root' in parents and (mimeType='image/png' or mimeType='image/jpeg' or mimeType='video/mp4')"
+  });
+  return res.data.files || [];
+}
+
+
+async function listFiles() {
+    try {
+        const res = await drive.files.list({
+            pageSize: 100,         
+            fields: 'files(id, name, mimeType)',
+            q: "'root' in parents"  //main folder shit
+        });
+
+        const files = res.data.files;
+        if (!files || files.length === 0) {
+            console.log('No files found in My Drive.');
+            return;
+        }
+
+        console.log('Files in My Drive:');
+        files.forEach(file => {
+            console.log(`Name: ${file.name}, ID: ${file.id}, Type: ${file.mimeType}`);
+        });
+    } catch (err) {
+        console.error('Error listing files:', err.message);
+    }
+}
+
+
+
+
+
+// ---------------- Make file public ---------------- //
+async function makeAllPublic() {
+  const files = await getFiles();
+
+  for (const file of files) {
+    try {
+      await drive.permissions.create({
+        fileId: file.id,
+        requestBody: {
+          role: 'reader',
+          type: 'anyone'
+        }
+      });
+
+      console.log("Public:", file.name);
+    } catch (e) {
+      console.log("Skip:", file.name);
+    }
+  }
+}
+
+
+
+
+
+
+
+app.get('/files', async (req, res) => {
+  try {
+    const files = await getFiles();
+
+    const result = files.map(file => ({
+      id: file.id,
+      name: file.name,
+      mimeType: file.mimeType,
+      url: `http://localhost:5000/files/${file.id}`
+    }));
+
+    res.json(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send(err.message);
+  }
+});
+
+
+
+
+
+
+
+app.get('/files/:id', async (req, res) => {
+  try {
+    const fileId = req.params.id;
+
+    const meta = await drive.files.get({
+      fileId,
+      fields: 'size, mimeType'
+    });
+
+    const fileSize = Number(meta.data.size);
+    const range = req.headers.range;
+
+    res.setHeader('Content-Type', meta.data.mimeType);
+    res.setHeader('Accept-Ranges', 'bytes');
+
+    if (!range) {
+      // full stream
+      const file = await drive.files.get(
+        { fileId, alt: 'media' },
+        { responseType: 'stream' }
+      );
+
+      return file.data.pipe(res);
+    }
+    // RANGE request (this enables fast forward)
+    const parts = range.replace(/bytes=/, "").split("-");
+    const start = parseInt(parts[0], 10);
+    const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
+    const chunkSize = (end - start) + 1;
+
+    res.status(206);
+    res.setHeader('Content-Range', `bytes ${start}-${end}/${fileSize}`);
+    res.setHeader('Content-Length', chunkSize);
+
+    const file = await drive.files.get(
+      {
+        fileId,
+        alt: 'media',
+        headers: {
+          Range: `bytes=${start}-${end}`
+        }
+      },
+      { responseType: 'stream' }
+    );
+
+    file.data.pipe(res);
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Video stream error");
+  }
+});
+
+
+connectMongoDB();
+makeAllPublic();
+listFiles();
+
+
+
+
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
+});
+

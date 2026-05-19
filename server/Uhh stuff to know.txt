@@ -1,0 +1,20 @@
+api{
+    package.json => modules makes so importing from api require to import to prevent bugs from happening
+    main : server.js  => so the main file is server.js (idk why this is even a thing)
+
+used dependencies : nodemon => for not needing to restart the server every save
+                    google drive api => for google drive database
+                    mime-types =>  so i know what file types are stored/shown/saved in database
+                    express => take a wild fucking guess
+                    multer => A middlewere between backend and frontend to process file uploads
+                    jsonwebtoken
+                    bcryptjs : these two are for making a logged in user sessions n shit
+                    stream : fragment the video file chunk by chunk to send it
+                    
+ }
+
+
+ frontend{
+    used dependencies : axios for fetching data or sum shit
+    
+ }
