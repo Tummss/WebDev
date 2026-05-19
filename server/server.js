@@ -23,9 +23,11 @@ app.use(cors());
 
 //idfk this do (seems to be working without it)
 const corsOptions = {
-  origin: 'http://localhost:3000', 
-  "https://frontend-txl5.onrender.com"
-}
+  origin: [
+    "http://localhost:3000",
+    "https://frontend-txl5.onrender.com"
+  ]
+};
 
 
 
