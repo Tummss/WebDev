@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+
 import MainPage from './pages/MainPage'
 import Movie from './pages/Movie'
 import Liked from './pages/Liked'
@@ -6,19 +8,18 @@ import Library from './pages/Library'
 import Login from './pages/Login'
 import Description from './pages/Description'
 import Signup from './pages/Signup'
-import { useEffect } from 'react'
-import {BrowserRouter, Routes, Route} from 'react-router-dom'
-
 
 function App() {
 
+  const API = process.env.REACT_APP_API;
+
   useEffect(() => {
-    fetch('http://localhost:5000/files')
+    fetch(`${API}/files`)
       .then(res => res.json())
       .then(data => console.log(data))
       .catch(err => console.error(err));
-  }, []);
-  
+  }, [API]);
+
   return (
     <BrowserRouter>
       <Routes>
