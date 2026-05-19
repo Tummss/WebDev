@@ -1,22 +1,19 @@
-require('dotenv').config();
-const express = require('express');
-const app = express();
+import dotenv from "dotenv";
+dotenv.config();
+import express from "express";
+import path from "path";
+import cors from "cors";
+import multer from "multer";
+import GridFsStorage from "multer-gridfs-storage";
+import Grid from "gridfs-stream";
+import stream from "stream";
+import fs from "fs";
+import { v4 as uuidv4 } from "uuid";
+import jwt from "jsonwebtoken";
+import { MongoClient, ServerApiVersion } from "mongodb";
+import { google } from "googleapis";
+const app = express(); // ✅ THIS IS REQUIRED
 const PORT = process.env.PORT || 5000;
-const path = require('path');
-const cors = require('cors');
-const multer = require('multer');
-const GridFsStorage = require('multer-gridfs-storage');
-const Grid = require('gridfs-stream');
-const stream = require("stream");
-const fs = require("fs");
-const { v4: uuidv4 } = require("uuid");
-const jwt = require("jsonwebtoken");
-
-
-
-
-
-
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -57,7 +54,6 @@ app.use((req, res, next) => {
 
 
 //googledrive authetication or sum bs
-const { google } = require('googleapis');
 const CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 const REDIRECT_URI = process.env.GOOGLE_REDIRECT_URI;
@@ -71,7 +67,6 @@ const drive = google.drive({ version: 'v3', auth: oauth2Client });
 
 
 //mongodb authetication or sum bs
-const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri_Mongo = process.env.MONGO_URI;
 
 const client = new MongoClient(uri_Mongo, {
