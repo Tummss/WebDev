@@ -25,7 +25,8 @@ app.use(cors());
 const corsOptions = {
   origin: [
     "http://localhost:3000",
-    "https://frontend-txl5.onrender.com"
+    "https://frontend-txl5.onrender.com",
+    "http://13.60.217.231"
   ]
 };
 
