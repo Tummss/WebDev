@@ -124,6 +124,8 @@ async function connectMongoDB() {
 
 
 
+
+
 async function showMovies() {
 
   const movies = await db.collection("MyMovies").find().toArray()
@@ -502,6 +504,8 @@ app.get("/comments/:movieId", async (req, res) => {
     res.status(500).send(err.message);
   }
 });
+
+
 
 
 //_____________________________________________________________________________POST COMMENT________________________________________________________________________//
