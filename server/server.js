@@ -12,7 +12,7 @@ import { v4 as uuidv4 } from "uuid";
 import jwt from "jsonwebtoken";
 import { MongoClient, ServerApiVersion } from "mongodb";
 import { google } from "googleapis";
-const app = express(); // ✅ THIS IS REQUIRED
+const app = express();
 const PORT = process.env.PORT || 5000;
 
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -81,7 +81,6 @@ const client = new MongoClient(uri_Mongo, {
   }
 });
 let db;
-
 
 
 

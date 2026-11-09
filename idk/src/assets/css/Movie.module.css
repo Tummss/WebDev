@@ -34,8 +34,9 @@
     justify-content: center;
 }
 .VideoPlayer{
-    width: 1200px;
-    height: 600px;
+    width: 1400px;
+    height: 800px;
+    padding-top: 20px;
     border: none;
 }
 
