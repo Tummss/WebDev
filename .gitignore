@@ -1,3 +1,5 @@
 .env
+/server/.env
+/idk/.env
 .env*
 !.env.example
